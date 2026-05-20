@@ -1,11 +1,15 @@
 Player p;
 ArrayList<Obstacle> obstacles = new  ArrayList();
 
+final color CYAN = color(0, 230, 253);
+final color PINKRED = color(255, 56, 111);
+
 float t = 0;
 
 void setup(){
+  noStroke();
   size(800, 600);
-  p = new Player();
+  p = new Player(CYAN);
 }
 
 void draw(){
@@ -13,17 +17,11 @@ void draw(){
   t++;
   for(int i = obstacles.size() - 1; i >= 0; i--){
     obstacles.get(i).update();
-    if(obstacles.get(i).done()) obstacles.remove(i);
   }
-  
   p.update();
-  for(Obstacle ob : obstacles){
-    if(p.isColliding(ob)) ob.h = 400;
-    else ob.h = 300;
-  }
   
   if(t % 60 == 1){
-    obstacles.add(new Obstacle(random(0, 300), random(0, 300), random(0, 300), random(0, 300)));
+    obstacles.add(new Rectangle(random(0, 300), random(0, 300), random(0, 300), random(0, 300), 100, PINKRED));
   }
 }
 
