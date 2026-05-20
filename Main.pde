@@ -1,6 +1,7 @@
 Player p;
 ArrayList<Obstacle> obstacles = new  ArrayList();
 
+final color NEARLYBLACK = color(19, 35, 36);
 final color CYAN = color(0, 230, 253);
 final color PINKRED = color(255, 56, 111);
 
@@ -13,10 +14,11 @@ void setup(){
 }
 
 void draw(){
-  background(255);
+  background(NEARLYBLACK);
   t++;
   for(int i = obstacles.size() - 1; i >= 0; i--){
-    obstacles.get(i).update();
+    if(obstacles.get(i).isDone()) obstacles.remove(i);
+    else obstacles.get(i).update();
   }
   p.update();
   

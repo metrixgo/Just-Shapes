@@ -18,9 +18,28 @@ class Rectangle implements Obstacle{
   }
   
   void update(){
-    fill(red(c), green(c), blue(c), t / l * 200);
-    rect(x, y, w, h);
     t++;
+    if(t <= l){
+      fill(red(c), green(c), blue(c), t / l * 100);
+    }
+    else if(t <= l + 30){
+      fill(lerpColor(color(255), c, (t - l) / 30));
+    }
+    else if(t <= l + 40){
+      fill(red(c), green(c), blue(c), lerp(alpha(c), 0, (t - l - 30) / 10));
+    }
+    else{
+      fill(0, 0, 0, 0);
+    }
+    rect(x, y, w, h);
+  }
+  
+  boolean isLethal(){
+    return t <= l + 30;
+  }
+  
+  boolean isDone(){
+    return t >= l + 40;
   }
   
   boolean isColliding(Player p){

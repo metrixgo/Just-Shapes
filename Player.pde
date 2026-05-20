@@ -1,8 +1,8 @@
 class Player{
   float x = 400;
   float y = 300;
-  float w = 50;
-  float h = 50;
+  float w = 30;
+  float h = 30;
   float dx = 0;
   float dy = 0;
   float speed = 10;
