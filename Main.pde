@@ -1,5 +1,10 @@
+import ddf.minim.*;
+
 Player p;
 ArrayList<Obstacle> obstacles = new  ArrayList();
+
+Minim minim;
+AudioPlayer song;
 
 final color NEARLYBLACK = color(19, 35, 36);
 final color CYAN = color(0, 230, 253);
@@ -11,6 +16,9 @@ void setup(){
   noStroke();
   size(800, 600);
   p = new Player(CYAN);
+  minim = new Minim(this);
+  song = minim.loadFile("data/TheEmeraldElectric.mp3");
+  song.play();
 }
 
 void draw(){
