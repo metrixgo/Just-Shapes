@@ -13,8 +13,8 @@ class Player{
   }
   
   void update(){
-    x += dx;
-    y += dy;
+    x = constrain(x + dx, 0, width - w);
+    y = constrain(y + dy, 0, height - h);
     fill(c);
     rect(x, y, w, h);
   }

@@ -1,17 +1,15 @@
-class Rectangle extends Obstacle{
-  float x;
-  float y;
+class Beam extends Obstacle{
+  float loc;
+  int dir;
   float w;
-  float h;
   float t;
   color c;
   
-  Rectangle(float x, float y, float w, float h, color c){
-    this.x = x;
-    this.y = y;
-    this.w = w;
-    this.h = h;
+  Beam(float loc, int dir, float w, color c){
+    this.loc = loc;
+    this.dir = dir;
     this.t = 0;
+    this.w = w;
     this.c = c;
   }
   
@@ -29,7 +27,13 @@ class Rectangle extends Obstacle{
     else{
       fill(0, 0, 0, 0);
     }
-    rect(x, y, w, h);
+    
+    if(dir == 1){
+      rect(0, loc, width + height, w);
+    }
+    else{
+      rect(loc, 0, w, width + height);
+    }
   }
   
   boolean isLethal(){
@@ -41,6 +45,11 @@ class Rectangle extends Obstacle{
   }
   
   boolean isColliding(Player p){
-    return (x <= p.x + p.w) && (x + w >= p.x) && (y <= p.y + p.h) && (y + h >= p.y);
+    if(dir == 1){
+      return (loc <= p.y + p.h) && (loc + w >= p.y);
+    }
+    else{
+      return (loc <= p.x + p.w) && (loc + w >= p.x);
+    }
   }
 }

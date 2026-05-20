@@ -25,13 +25,14 @@ void draw(){
   background(NEARLYBLACK);
   t++;
   for(int i = obstacles.size() - 1; i >= 0; i--){
-    if(obstacles.get(i).isDone()) obstacles.remove(i);
+    if(obstacles.get(i).isDone() || obstacles.get(i).isColliding(p)) obstacles.remove(i);
     else obstacles.get(i).update();
   }
   p.update();
   
   if(t % 60 == 1){
-    obstacles.add(new Rectangle(random(0, 300), random(0, 300), random(0, 300), random(0, 300), 100, PINKRED));
+    obstacles.add(new Rectangle(random(0, 300), random(0, 300), random(0, 300), random(0, 300), PINKRED));
+    obstacles.add(new Beam(random(0, 300), (int)random(1,3), random(0, 300), PINKRED));
   }
 }
 
