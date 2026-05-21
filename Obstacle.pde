@@ -5,5 +5,6 @@ abstract class Obstacle{
   float fadeInStr = 100;
   abstract void update();
   abstract boolean isDone();
+  abstract boolean isLethal();
   abstract boolean isColliding(Player p);
 }

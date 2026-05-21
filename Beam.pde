@@ -37,7 +37,7 @@ class Beam extends Obstacle{
   }
   
   boolean isLethal(){
-    return t <= fadeInDur + lethalDur;
+    return t < fadeInDur + lethalDur && t > fadeInDur;
   }
   
   boolean isDone(){
@@ -45,6 +45,7 @@ class Beam extends Obstacle{
   }
   
   boolean isColliding(Player p){
+    if(p == null) return false;
     if(dir == 1){
       return (loc <= p.y + p.h) && (loc + w >= p.y);
     }

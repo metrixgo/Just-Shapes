@@ -3,9 +3,11 @@ class Player{
   float y = 300;
   float w = 30;
   float h = 30;
-  float dx = 0;
-  float dy = 0;
   float speed = 10;
+  boolean up = false;
+  boolean down = false;
+  boolean left = false;
+  boolean right = false;
   color c;
   
   Player(color c){
@@ -13,8 +15,15 @@ class Player{
   }
   
   void update(){
-    x = constrain(x + dx, 0, width - w);
-    y = constrain(y + dy, 0, height - h);
+    if(gameState != 1) return;
+    fill(c);
+    rect(x, y, w, h);
+    if(up) y -= speed;
+    if(down) y += speed;
+    if(left) x -= speed;
+    if(right) x += speed;
+    x = constrain(x, 0, width - w);
+    y = constrain(y, 0, height - h);
     fill(c);
     rect(x, y, w, h);
   }

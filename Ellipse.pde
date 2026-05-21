@@ -33,7 +33,7 @@ class Ellipse extends Obstacle{
   }
   
   boolean isLethal(){
-    return t <= fadeInDur + lethalDur;
+    return t < fadeInDur + lethalDur && t > fadeInDur;
   }
   
   boolean isDone(){
@@ -41,6 +41,7 @@ class Ellipse extends Obstacle{
   }
   
   boolean isColliding(Player p){
+    if(p == null) return false;
     float dx = (constrain(x, p.x, p.x + p.w) - x) / w * 2;
     float dy = (constrain(y, p.y, p.y + p.h) - y) / h * 2;
     return (dx * dx + dy * dy) <= 1;
