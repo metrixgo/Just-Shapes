@@ -10,7 +10,8 @@ final color NEARLYBLACK = color(19, 35, 36);
 final color CYAN = color(0, 230, 253);
 final color PINKRED = color(255, 56, 111);
 
-float t = 0;
+float t = 2460;
+float interval = 60.0 / 91 * 1000;
 
 void setup(){
   noStroke();
@@ -23,16 +24,17 @@ void setup(){
 
 void draw(){
   background(NEARLYBLACK);
-  t++;
   for(int i = obstacles.size() - 1; i >= 0; i--){
     if(obstacles.get(i).isDone() || obstacles.get(i).isColliding(p)) obstacles.remove(i);
     else obstacles.get(i).update();
   }
   p.update();
   
-  if(t % 60 == 1){
+  if(millis() >= t + interval){
+    t += interval;
     obstacles.add(new Rectangle(random(0, 300), random(0, 300), random(0, 300), random(0, 300), PINKRED));
     obstacles.add(new Beam(random(0, 300), (int)random(1,3), random(0, 300), PINKRED));
+    obstacles.add(new Ellipse(random(0, 300), random(0, 300), random(0, 300), random(0, 300), PINKRED));
   }
 }
 
