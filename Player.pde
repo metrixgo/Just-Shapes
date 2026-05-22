@@ -4,6 +4,9 @@ class Player{
   float w = 30;
   float h = 30;
   float speed = 10;
+  int lives = 3;
+  int invincibility = 80;
+  int t = -1;
   boolean up = false;
   boolean down = false;
   boolean left = false;
@@ -17,13 +20,11 @@ class Player{
   
   void update(){
     if(gameState != 1) return;
-    fill(c);
-    rect(x, y, w, h);
-    if(millis() % 100 < 50 && (up || down || left || right)) particles.add(new Particle(x, y, c));
+    if(millis() % 100 < 50 && (up || down || left || right)) particles.add(new Particle(x, y, c, 0));
     float temp = speed;
     if(dash && (up || down || left || right)){
       temp *= 10;
-      particles.add(new Particle(x, y, c, true));
+      particles.add(new Particle(x, y, c, 1));
     }
     dash = false;
     if(up) y -= temp;
@@ -32,7 +33,22 @@ class Player{
     if(right) x += temp;
     x = constrain(x, w / 2, width - w / 2);
     y = constrain(y, h / 2, height - h / 2);
-    fill(c);
+    if(t >= 0 && t <= invincibility){
+      fill(lerpColor(color(255), c, t * 1.0 / invincibility));
+      t++;
+    }
+    else{
+      fill(c);
+      t = -1;
+    }
     rect(x, y, w, h);
+  }
+
+  boolean hurt(){
+    if(t >= 0 && t <= invincibility) return false;
+    particles.add(new Particle(x, y, color(255), 2));
+    lives--;
+    t = 0;
+    return lives <= 0;
   }
 }

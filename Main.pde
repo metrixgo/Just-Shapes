@@ -1,4 +1,4 @@
-import ddf.minim.*;
+import processing.sound.*;
 
 int curTrack = 0;
 int gameState = 0;
@@ -8,8 +8,7 @@ Player p;
 ArrayList<Obstacle> obstacles = new  ArrayList();
 ArrayList<Particle> particles = new  ArrayList();
 
-Minim minim;
-AudioPlayer song;
+SoundFile song;
 
 final color NEARLYBLACK = color(19, 35, 36);
 final color CYAN = color(0, 230, 253);
@@ -23,11 +22,10 @@ void setup(){
   rectMode(CENTER);
   ellipseMode(CENTER);
   size(800, 600);
-  minim = new Minim(this);
-  song = minim.loadFile("data/Theme.mp3");
+  song = new SoundFile(this, "data/Theme.mp3");
   song.loop();
-  tracks.add(new Track(0, "Source", NEARLYBLACK, PINKRED, CYAN, 125, 2400));
-  tracks.add(new Track(1, "The Emerald Electric", NEARLYBLACK, DARKGREEN, LIGHTGREEN, 91, 2260));
+  tracks.add(new Track(0, "Source", NEARLYBLACK, PINKRED, CYAN, 125, 2400, this));
+  tracks.add(new Track(1, "The Emerald Electric", NEARLYBLACK, DARKGREEN, LIGHTGREEN, 91, 2610, this));
 }
 
 void draw(){
@@ -67,8 +65,8 @@ void keyPressed(){
     }
     else if(keyCode == ENTER){
       p = new Player(tracks.get(curTrack).player);
-      song.close();
-      song = minim.loadFile("data/" + tracks.get(curTrack).name + ".mp3");
+      song.stop();
+      song = new SoundFile(this, "data/" + tracks.get(curTrack).name + ".mp3");
       song.play();
       tracks.get(curTrack).play();
       gameState = 1;
@@ -77,8 +75,8 @@ void keyPressed(){
   else{
     if(keyCode == ENTER){
       gameState = 0;
-      song.close();
-      song = minim.loadFile("data/Theme.mp3");
+      song.stop();
+      song = new SoundFile(this, "data/Theme.mp3");
       song.play();
       p = null;
     }

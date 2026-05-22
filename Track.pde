@@ -6,7 +6,7 @@ class Track{
     color obstacle;
     color player;
 
-    AudioPlayer music;
+    PApplet main;
     float bpm;
     float offset;
 
@@ -20,13 +20,13 @@ class Track{
     String[] curLine;
     ArrayList<Obstacle> obstacles = new  ArrayList();
 
-    Track(int id, String name, color background, color obstacle, color player, float bpm, float offset){
+    Track(int id, String name, color background, color obstacle, color player, float bpm, float offset, PApplet main){
         this.id = id;
         this.name = name;
         this.background = background;
         this.obstacle = obstacle;
         this.player = player;
-        this.music = minim.loadFile("data/+" + name + ".mp3");
+        this.main = main;
         this.bpm = bpm;
         this.offset = offset;
         this.started = false;
@@ -53,20 +53,22 @@ class Track{
         else if(gameState == 1){
             if(!song.isPlaying()){
                 gameState = 3;
-                song.close();
-                song = minim.loadFile("data/complete.mp3");
+                song.stop();
+                song = new SoundFile(main, "data/complete.mp3");
                 song.play();
             }
             for(int i = obstacles.size() - 1; i >= 0; i--){
                 if(obstacles.get(i).isDone()) obstacles.remove(i);
-                else if(obstacles.get(i).isLethal() && obstacles.get(i).isColliding(p)){
-                    song.close();
-                    song = minim.loadFile("data/death.mp3");
+                else if(obstacles.get(i).isLethal() && obstacles.get(i).isColliding(p) && p.hurt()){
+                    song.stop();
+                    song = new SoundFile(main, "data/death.mp3");
                     song.play();
                     gameState = 2;
                 }
                 else obstacles.get(i).update();
             }
+
+            if(line >= lines.length) return;
 
             curLine = split(lines[line], ";");
 
@@ -77,11 +79,11 @@ class Track{
                     line = prevLine;
                 }
                 else{
-                    line = (line + 1) % lines.length;
+                    line++;
                     prevLine = line;
                     repeat = -1;
                 }
-                curLine = split(lines[line], ";");
+                if(line < lines.length) curLine = split(lines[line], ";");
             }
 
             if(millis() >= 60 / bpm * 1000 * float(curLine[0]) + prevT){
@@ -107,7 +109,7 @@ class Track{
                     else loc = random(random(width));
                     obstacles.add(new Kick(loc, dir, float(curLine[2]), obstacle));
                 }
-                line = (line + 1) % lines.length;
+                line++;
             }
         }
         else if(gameState == 2){

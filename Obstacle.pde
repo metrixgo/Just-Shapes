@@ -1,5 +1,5 @@
 abstract class Obstacle{
-  float fadeInDur = 100;
+  float fadeInDur = 80;
   float lethalDur = 15;
   float fadeOutDur = 10;
   float fadeInStr = 100;
