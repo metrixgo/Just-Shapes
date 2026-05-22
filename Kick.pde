@@ -92,7 +92,7 @@ class Kick extends Obstacle{
   
   boolean isColliding(Player p){
     if(p == null) return false;
-    if(dir == 0){
+    if(dir % 2 == 0){
       return (loc - w / 2 <= p.y + p.h / 2) && (loc + w / 2 >= p.y - p.h / 2);
     }
     else{
