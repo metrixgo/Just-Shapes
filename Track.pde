@@ -98,6 +98,13 @@ class Track{
                 else if(curLine[1].equals("ellipse")){
                     obstacles.add(new Ellipse(random(width), random(height), float(curLine[2]), float(curLine[3]), obstacle));
                 }
+                else if(curLine[1].equals("kick")){
+                    int dir = (int)random(4);
+                    float loc;
+                    if(dir == 0) loc = random(float(curLine[2]) / 2, height - float(curLine[2]) / 2);
+                    else loc = random(float(curLine[2]) / 2, width - float(curLine[2]) / 2);
+                    obstacles.add(new Kick(loc, dir, float(curLine[2]), obstacle));
+                }
                 line = (line + 1) % lines.length;
             }
         }
