@@ -35,9 +35,9 @@ class Particle{
   }
   
   void update(){
-    if(t >= l - 1) return;
+    if(t >= l) return;
     t++;
-    fill(lerpColor(c, color(0, 0, 0, 0), t / l));
+    fill(red(c), green(c), blue(c), lerp(alpha(c), 0, t / l));
     if(!isDash){
         pushMatrix();
         translate(x, y);

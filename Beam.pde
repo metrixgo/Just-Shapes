@@ -14,6 +14,16 @@ class Beam extends Obstacle{
     this.curW = w - amplitude;
     this.c = c;
   }
+
+  Beam(float loc, int dir, float w, color c, float l){
+    this.loc = loc;
+    this.dir = dir;
+    this.t = 0;
+    this.w = w;
+    this.curW = w - amplitude;
+    this.c = c;
+    lethalDur = l;
+  }
   
   void update(){
     t++;

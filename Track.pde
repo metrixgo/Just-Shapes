@@ -41,7 +41,6 @@ class Track{
 
     void update(){
         background(background);
-
         if(gameState == 0){
             obstacles.clear();
             line = 0;
@@ -52,11 +51,15 @@ class Track{
             rect(width / 2 , height / 2 - 50, 400, 300);
         }
         else if(gameState == 1){
-
+            if(!song.isPlaying()){
+                gameState = 3;
+                song.close();
+                song = minim.loadFile("data/complete.mp3");
+                song.play();
+            }
             for(int i = obstacles.size() - 1; i >= 0; i--){
-                if(obstacles.isEmpty()) break;
                 if(obstacles.get(i).isDone()) obstacles.remove(i);
-                else if(false && obstacles.get(i).isLethal() && obstacles.get(i).isColliding(p)){
+                else if(obstacles.get(i).isLethal() && obstacles.get(i).isColliding(p)){
                     song.close();
                     song = minim.loadFile("data/death.mp3");
                     song.play();
@@ -86,14 +89,13 @@ class Track{
                 if(curLine[1].equals("beam")){
                     int dir = (int)random(2);
                     float loc;
-                    if(dir == 0) loc = random(float(curLine[2]) / 2, height - float(curLine[2]) / 2);
-                    else loc = random(float(curLine[2]) / 2, width - float(curLine[2]) / 2);
-                    obstacles.add(new Beam(loc, dir, float(curLine[2]), obstacle));
+                    if(dir == 0) loc = random(height);
+                    else loc = random(random(width));
+                    if(curLine.length >= 4) obstacles.add(new Beam(loc, dir, float(curLine[2]), obstacle, float(curLine[3])));
+                    else obstacles.add(new Beam(loc, dir, float(curLine[2]), obstacle));
                 }
                 else if(curLine[1].equals("rectangle")){
-                    float x = random(float(curLine[2]) / 2, width - float(curLine[2]) / 2);
-                    float y = random(float(curLine[3]) / 2, height - float(curLine[3]) / 2);
-                    obstacles.add(new Rectangle(x, y, float(curLine[2]), float(curLine[3]), obstacle));
+                    obstacles.add(new Rectangle(random(width), random(height), float(curLine[2]), float(curLine[3]), obstacle));
                 }
                 else if(curLine[1].equals("ellipse")){
                     obstacles.add(new Ellipse(random(width), random(height), float(curLine[2]), float(curLine[3]), obstacle));
@@ -101,8 +103,8 @@ class Track{
                 else if(curLine[1].equals("kick")){
                     int dir = (int)random(4);
                     float loc;
-                    if(dir == 0) loc = random(float(curLine[2]) / 2, height - float(curLine[2]) / 2);
-                    else loc = random(float(curLine[2]) / 2, width - float(curLine[2]) / 2);
+                    if(dir % 2 == 0) loc = random(height);
+                    else loc = random(random(width));
                     obstacles.add(new Kick(loc, dir, float(curLine[2]), obstacle));
                 }
                 line = (line + 1) % lines.length;
@@ -110,19 +112,25 @@ class Track{
         }
         else if(gameState == 2){
             started = false;
-            gameState = 2;
             p = null;
+            for(int i = obstacles.size() - 1; i >= 0; i--){
+                if(obstacles.get(i).isDone()) obstacles.remove(i);
+                else obstacles.get(i).update();
+            }
             fill(player);
             textSize(50);
             text("Game Over\n Press Enter to Restart", width / 2, height / 2 + 150);
         }
         else if (gameState == 3){
             started = false;
-            gameState = 2;
             p = null;
+            for(int i = obstacles.size() - 1; i >= 0; i--){
+                if(obstacles.get(i).isDone()) obstacles.remove(i);
+                else obstacles.get(i).update();
+            }
             fill(player);
             textSize(50);
-            text("Game Over\n Press Enter to Restart", width / 2, height / 2 + 150);
+            text("Level Complete!\n Press Enter to Restart", width / 2, height / 2 + 150);
         }
     }
 

@@ -66,12 +66,12 @@ void keyPressed(){
       curTrack = max(curTrack - 1, 0);
     }
     else if(keyCode == ENTER){
-      gameState = 1;
       p = new Player(tracks.get(curTrack).player);
       song.close();
       song = minim.loadFile("data/" + tracks.get(curTrack).name + ".mp3");
       song.play();
       tracks.get(curTrack).play();
+      gameState = 1;
     }
   }
   else{

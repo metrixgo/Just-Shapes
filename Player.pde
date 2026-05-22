@@ -23,9 +23,9 @@ class Player{
     float temp = speed;
     if(dash && (up || down || left || right)){
       temp *= 10;
-      dash = false;
       particles.add(new Particle(x, y, c, true));
     }
+    dash = false;
     if(up) y -= temp;
     if(down) y += temp;
     if(left) x -= temp;

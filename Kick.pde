@@ -20,6 +20,7 @@ class Kick extends Obstacle{
   void update(){
     t++;
     if(t <= fadeInDur){
+      fill(c);
       if(dir == 0){
         loc2 = lerp(-width / 2, -width / 2 + amplitude * 3, t / fadeInDur);
       }
@@ -34,6 +35,7 @@ class Kick extends Obstacle{
       }
     }
     else if(t <= fadeInDur + lethalDur){
+      fill(lerpColor(color(255), c, (t - fadeInDur) / lethalDur));
       if(dir == 0){
         loc2 = lerp(-width / 2 + amplitude * 3, width / 2, constrain((t - fadeInDur) / kickDur, 0, 1));
       }
@@ -48,6 +50,7 @@ class Kick extends Obstacle{
       }
     }
     else if(t <= fadeInDur + lethalDur + fadeOutDur){
+      fill(c);
       if(dir == 0){
         loc2 = lerp(width / 2, -width / 2, (t - fadeInDur - lethalDur) / fadeOutDur);
       }
@@ -61,7 +64,6 @@ class Kick extends Obstacle{
         loc2 = lerp(height / 2, 1.5 * height, (t - fadeInDur - lethalDur) / fadeOutDur);
       }
     }
-    fill(c);
     if(dir % 2 == 0){
       rect(loc2, loc, width, w);
     }
