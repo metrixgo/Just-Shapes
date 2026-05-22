@@ -2,7 +2,9 @@ class Rectangle extends Obstacle{
   float x;
   float y;
   float w;
+  float curW;
   float h;
+  float curH;
   float t;
   color c;
   
@@ -10,6 +12,7 @@ class Rectangle extends Obstacle{
     this.x = x;
     this.y = y;
     this.w = w;
+    this.curW = w - amplitude;
     this.h = h;
     this.t = 0;
     this.c = c;
@@ -19,17 +22,21 @@ class Rectangle extends Obstacle{
     t++;
     if(t <= fadeInDur){
       fill(red(c), green(c), blue(c), t / fadeInDur * fadeInStr);
+      curW = lerp(w - amplitude, w, t / fadeInDur);
+      curH = lerp(h - amplitude, h, t / fadeInDur);
     }
     else if(t <= fadeInDur + lethalDur){
       fill(lerpColor(color(255), c, (t - fadeInDur) / lethalDur));
     }
     else if(t <= fadeInDur + lethalDur + fadeOutDur){
       fill(red(c), green(c), blue(c), lerp(alpha(c), 0, (t - fadeInDur - lethalDur) / fadeOutDur));
+      curW = lerp(w, w - amplitude, (t - fadeInDur - lethalDur) / fadeOutDur);
+      curH = lerp(h, h - amplitude, (t - fadeInDur - lethalDur) / fadeOutDur);
     }
     else{
       fill(0, 0, 0, 0);
     }
-    rect(x, y, w, h);
+    rect(x, y, curW, curH);
   }
   
   boolean isLethal(){
@@ -42,6 +49,6 @@ class Rectangle extends Obstacle{
   
   boolean isColliding(Player p){
     if(p == null) return false;
-    return (x <= p.x + p.w) && (x + w >= p.x) && (y <= p.y + p.h) && (y + h >= p.y);
+    return (x - w / 2 <= p.x + p.w / 2) && (x + w / 2 >= p.x - p.w / 2) && (y - h / 2 <= p.y + p.h / 2) && (y + h / 2 >= p.y - p.h / 2);
   }
 }

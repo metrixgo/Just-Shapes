@@ -1,14 +1,24 @@
 class Track{
     int id;
     String name;
+
     color background;
     color obstacle;
     color player;
+
     AudioPlayer music;
     float bpm;
     float offset;
+
     boolean started;
     float prevT;
+    int line;
+    int prevLine;
+    int repeat;
+
+    String[] lines;
+    String[] curLine;
+    ArrayList<Obstacle> obstacles = new  ArrayList();
 
     Track(int id, String name, color background, color obstacle, color player, float bpm, float offset){
         this.id = id;
@@ -21,24 +31,85 @@ class Track{
         this.offset = offset;
         this.started = false;
         this.prevT = offset;
+        p = new Player(player);
+        this.line = 0;
+        this.prevLine = 0;
+        this.repeat = -1;
+        this.lines = loadStrings("data/Track" + id + ".txt");
+        this.curLine = split(lines[line], ";");
     }
 
     void update(){
         background(background);
+
         if(gameState == 0){
+            obstacles.clear();
+            line = 0;
             fill(player);
             textSize(50);
             text(name, width / 2, height / 2 + 150);
             fill(obstacle);
-            rect(width / 2 - 200, height / 2 - 200, 400, 300);
+            rect(width / 2 , height / 2 - 50, 400, 300);
         }
         else if(gameState == 1){
-            if(millis() >= 60 / bpm * 1000 + prevT){
-                prevT += 60 / bpm * 1000;
-                obstacles.add(new Rectangle(random(width - 50), random(height - 50), 50, 50, obstacle));
+
+            for(int i = obstacles.size() - 1; i >= 0; i--){
+                if(obstacles.isEmpty()) break;
+                if(obstacles.get(i).isDone()) obstacles.remove(i);
+                else if(false && obstacles.get(i).isLethal() && obstacles.get(i).isColliding(p)){
+                    song.close();
+                    song = minim.loadFile("data/death.mp3");
+                    song.play();
+                    gameState = 2;
+                }
+                else obstacles.get(i).update();
+            }
+
+            curLine = split(lines[line], ";");
+
+            if(curLine[0].equals("repeat")){
+                if(repeat != 0 && !curLine[1].equals("0")){
+                    if(repeat == -1) repeat = int(curLine[1]) - 1;
+                    else repeat--;
+                    line = prevLine;
+                }
+                else{
+                    line = (line + 1) % lines.length;
+                    prevLine = line;
+                    repeat = -1;
+                }
+                curLine = split(lines[line], ";");
+            }
+
+            if(millis() >= 60 / bpm * 1000 * float(curLine[0]) + prevT){
+                prevT += 60 / bpm * 1000 * float(curLine[0]);
+                if(curLine[1].equals("beam")){
+                    int dir = (int)random(2);
+                    float loc;
+                    if(dir == 0) loc = random(float(curLine[2]) / 2, height - float(curLine[2]) / 2);
+                    else loc = random(float(curLine[2]) / 2, width - float(curLine[2]) / 2);
+                    obstacles.add(new Beam(loc, dir, float(curLine[2]), obstacle));
+                }
+                else if(curLine[1].equals("rectangle")){
+                    float x = random(float(curLine[2]) / 2, width - float(curLine[2]) / 2);
+                    float y = random(float(curLine[3]) / 2, height - float(curLine[3]) / 2);
+                    obstacles.add(new Rectangle(x, y, float(curLine[2]), float(curLine[3]), obstacle));
+                }
+                else if(curLine[1].equals("ellipse")){
+                    obstacles.add(new Ellipse(random(width), random(height), float(curLine[2]), float(curLine[3]), obstacle));
+                }
+                line = (line + 1) % lines.length;
             }
         }
-        else{
+        else if(gameState == 2){
+            started = false;
+            gameState = 2;
+            p = null;
+            fill(player);
+            textSize(50);
+            text("Game Over\n Press Enter to Restart", width / 2, height / 2 + 150);
+        }
+        else if (gameState == 3){
             started = false;
             gameState = 2;
             p = null;

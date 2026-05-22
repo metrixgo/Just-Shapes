@@ -2,7 +2,9 @@ class Ellipse extends Obstacle{
   float x;
   float y;
   float w;
+  float curW;
   float h;
+  float curH;
   float t;
   color c;
   
@@ -11,6 +13,8 @@ class Ellipse extends Obstacle{
     this.y = y;
     this.w = w;
     this.h = h;
+    this.curW = w - amplitude;
+    this.curH = h - amplitude;
     this.t = 0;
     this.c = c;
   }
@@ -19,17 +23,21 @@ class Ellipse extends Obstacle{
     t++;
     if(t <= fadeInDur){
       fill(red(c), green(c), blue(c), t / fadeInDur * fadeInStr);
+      curW = lerp(w - amplitude, w, t / fadeInDur);
+      curH = lerp(h - amplitude, h, t / fadeInDur);
     }
     else if(t <= fadeInDur + lethalDur){
       fill(lerpColor(color(255), c, (t - fadeInDur) / lethalDur));
     }
     else if(t <= fadeInDur + lethalDur + fadeOutDur){
       fill(red(c), green(c), blue(c), lerp(alpha(c), 0, (t - fadeInDur - lethalDur) / fadeOutDur));
+      curW = lerp(w, w - amplitude, (t - fadeInDur - lethalDur) / fadeOutDur);
+      curH = lerp(h, h - amplitude, (t - fadeInDur - lethalDur) / fadeOutDur);
     }
     else{
       fill(0, 0, 0, 0);
     }
-    ellipse(x, y, w, h);
+    ellipse(x, y, curW, curH);
   }
   
   boolean isLethal(){
@@ -42,8 +50,8 @@ class Ellipse extends Obstacle{
   
   boolean isColliding(Player p){
     if(p == null) return false;
-    float dx = (constrain(x, p.x, p.x + p.w) - x) / w * 2;
-    float dy = (constrain(y, p.y, p.y + p.h) - y) / h * 2;
+    float dx = (constrain(x, p.x - p.w / 2, p.x + p.w / 2) - x) / w * 2;
+    float dy = (constrain(y, p.y - p.h / 2, p.y + p.h / 2) - y) / h * 2;
     return (dx * dx + dy * dy) <= 1;
   }
 }

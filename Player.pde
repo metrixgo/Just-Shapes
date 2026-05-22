@@ -1,6 +1,6 @@
 class Player{
-  float x = 400;
-  float y = 300;
+  float x = width / 2;
+  float y = height / 2 ;
   float w = 30;
   float h = 30;
   float speed = 10;
@@ -22,8 +22,8 @@ class Player{
     if(down) y += speed;
     if(left) x -= speed;
     if(right) x += speed;
-    x = constrain(x, 0, width - w);
-    y = constrain(y, 0, height - h);
+    x = constrain(x, w / 2, width - w / 2);
+    y = constrain(y, h / 2, height - h / 2);
     fill(c);
     rect(x, y, w, h);
   }

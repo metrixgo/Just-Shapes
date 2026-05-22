@@ -19,28 +19,19 @@ final color LIGHTGREEN = color(215, 249, 159);
 void setup(){
   noStroke();
   textAlign(CENTER, CENTER);
+  rectMode(CENTER);
+  ellipseMode(CENTER);
   size(800, 600);
   minim = new Minim(this);
   song = minim.loadFile("data/Theme.mp3");
   song.loop();
   tracks.add(new Track(0, "Source", NEARLYBLACK, PINKRED, CYAN, 125, 2400));
-  tracks.add(new Track(1, "The Emerald Electric", NEARLYBLACK, DARKGREEN, LIGHTGREEN, 91, 2100));
+  tracks.add(new Track(1, "The Emerald Electric", NEARLYBLACK, DARKGREEN, LIGHTGREEN, 91, 2260));
 }
 
 void draw(){
   tracks.get(curTrack).update();
   if(p != null) p.update();
-  for(int i = obstacles.size() - 1; i >= 0; i--){
-      if(obstacles.isEmpty()) break;
-      if(obstacles.get(i).isDone()) obstacles.remove(i);
-      else if(obstacles.get(i).isLethal() && obstacles.get(i).isColliding(p)){
-        song.close();
-        song = minim.loadFile("data/death.mp3");
-        song.play();
-        gameState = 2;
-      }
-      else obstacles.get(i).update();
-    }
 }
 
 void keyPressed(){
@@ -81,7 +72,6 @@ void keyPressed(){
       song = minim.loadFile("data/Theme.mp3");
       song.play();
       p = null;
-      obstacles.clear();
     }
   }
 }
