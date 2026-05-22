@@ -8,6 +8,7 @@ class Player{
   boolean down = false;
   boolean left = false;
   boolean right = false;
+  boolean dash = false;
   color c;
   
   Player(color c){
@@ -18,10 +19,17 @@ class Player{
     if(gameState != 1) return;
     fill(c);
     rect(x, y, w, h);
-    if(up) y -= speed;
-    if(down) y += speed;
-    if(left) x -= speed;
-    if(right) x += speed;
+    if(millis() % 100 < 50 && (up || down || left || right)) particles.add(new Particle(x, y, c));
+    float temp = speed;
+    if(dash && (up || down || left || right)){
+      temp *= 10;
+      dash = false;
+      particles.add(new Particle(x, y, c, true));
+    }
+    if(up) y -= temp;
+    if(down) y += temp;
+    if(left) x -= temp;
+    if(right) x += temp;
     x = constrain(x, w / 2, width - w / 2);
     y = constrain(y, h / 2, height - h / 2);
     fill(c);

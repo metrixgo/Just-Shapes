@@ -6,6 +6,7 @@ ArrayList<Track> tracks = new ArrayList();
 
 Player p;
 ArrayList<Obstacle> obstacles = new  ArrayList();
+ArrayList<Particle> particles = new  ArrayList();
 
 Minim minim;
 AudioPlayer song;
@@ -31,6 +32,11 @@ void setup(){
 
 void draw(){
   tracks.get(curTrack).update();
+  for(int i = particles.size() - 1; i >= 0; i--){
+    if(particles.isEmpty()) break;
+    if(particles.get(i).isDone()) particles.remove(i);
+    else particles.get(i).update();
+  }
   if(p != null) p.update();
 }
 
@@ -47,6 +53,9 @@ void keyPressed(){
     }
     else if(keyCode == RIGHT || key == 'd'){
       p.right = true;
+    }
+    else if(key == ' '){
+      p.dash = true;
     }
   }
   else if(gameState == 0){
