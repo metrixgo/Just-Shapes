@@ -71,6 +71,17 @@ class Track{
             if(line >= lines.length) return;
 
             curLine = split(lines[line], ";");
+            if(curLine[0].equals("multi")){
+                int n = int(curLine[1]);
+                for(int i = 1; i <= n; i++){
+                    line++;
+                    if(line >= lines.length) break;
+                    curLine = split(lines[line], ";");
+                    addCurLineObstacles();
+                }
+                line++;
+                curLine = split(lines[line], ";");
+            }
 
             if(curLine[0].equals("repeat")){
                 if(repeat != 0 && !curLine[1].equals("0")){
@@ -88,27 +99,7 @@ class Track{
 
             if(millis() >= 60 / bpm * 1000 * float(curLine[0]) + prevT){
                 prevT += 60 / bpm * 1000 * float(curLine[0]);
-                if(curLine[1].equals("beam")){
-                    int dir = (int)random(2);
-                    float loc;
-                    if(dir == 0) loc = random(height);
-                    else loc = random(random(width));
-                    if(curLine.length >= 4) obstacles.add(new Beam(loc, dir, float(curLine[2]), obstacle, float(curLine[3])));
-                    else obstacles.add(new Beam(loc, dir, float(curLine[2]), obstacle));
-                }
-                else if(curLine[1].equals("rectangle")){
-                    obstacles.add(new Rectangle(random(width), random(height), float(curLine[2]), float(curLine[3]), obstacle));
-                }
-                else if(curLine[1].equals("ellipse")){
-                    obstacles.add(new Ellipse(random(width), random(height), float(curLine[2]), float(curLine[3]), obstacle));
-                }
-                else if(curLine[1].equals("kick")){
-                    int dir = (int)random(4);
-                    float loc;
-                    if(dir % 2 == 0) loc = random(height);
-                    else loc = random(random(width));
-                    obstacles.add(new Kick(loc, dir, float(curLine[2]), obstacle));
-                }
+                addCurLineObstacles();
                 line++;
             }
         }
@@ -133,6 +124,30 @@ class Track{
             fill(player);
             textSize(50);
             text("Level Complete!\n Press Enter to Restart", width / 2, height / 2 + 150);
+        }
+    }
+
+    void addCurLineObstacles(){
+        if(curLine[1].equals("beam")){
+            int dir = (int)random(2);
+            float loc;
+            if(dir == 0) loc = random(height);
+            else loc = random(random(width));
+            if(curLine.length >= 4) obstacles.add(new Beam(loc, dir, float(curLine[2]), obstacle, float(curLine[3])));
+            else obstacles.add(new Beam(loc, dir, float(curLine[2]), obstacle));
+        }
+        else if(curLine[1].equals("rectangle")){
+            obstacles.add(new Rectangle(random(width), random(height), float(curLine[2]), float(curLine[3]), obstacle));
+        }
+        else if(curLine[1].equals("ellipse")){
+            obstacles.add(new Ellipse(random(width), random(height), float(curLine[2]), float(curLine[3]), obstacle));
+        }
+        else if(curLine[1].equals("kick")){
+            int dir = (int)random(4);
+            float loc;
+            if(dir % 2 == 0) loc = random(height);
+            else loc = random(random(width));
+            obstacles.add(new Kick(loc, dir, float(curLine[2]), obstacle));
         }
     }
 

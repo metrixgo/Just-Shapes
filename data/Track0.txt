@@ -1,4 +1,6 @@
-0.5;kick;100
-0.25;ellipse;100;100
-0.25;beam;50
+1;wait
+multi;3
+0;kick;50
+0;beam;50
+0;ellipse;50;50
 repeat;67676767
