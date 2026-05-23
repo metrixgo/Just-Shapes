@@ -6,3 +6,5 @@ As of right now it only has one completed track. There will be more effects, obs
 Demo Video: https://www.youtube.com/watch?v=JJyxhN8nMyk
 
 How to play: Download the zip code, then extract it inside a folder. Open processing editor on your computer, navigate to the Main.pde file, then click run to play!
+
+There is no AI content in this game. Hope you can enjoy it!
