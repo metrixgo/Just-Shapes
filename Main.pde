@@ -4,11 +4,13 @@ int curTrack = 0;
 int gameState = 0;
 ArrayList<Track> tracks = new ArrayList();
 
-float tranX;
-float tranY;
+
 Player p;
 ArrayList<Obstacle> obstacles = new  ArrayList();
 ArrayList<Particle> particles = new  ArrayList();
+
+float tranX = 0;
+float tranY = 0;
 
 SoundFile song;
 
@@ -31,6 +33,8 @@ void setup(){
 }
 
 void draw(){
+  pushMatrix();
+  translate(tranX, tranY);
   tracks.get(curTrack).update();
   for(int i = particles.size() - 1; i >= 0; i--){
     if(particles.isEmpty()) break;
@@ -38,6 +42,11 @@ void draw(){
     else particles.get(i).update();
   }
   if(p != null) p.update();
+  if(abs(tranX) > 0.01 || abs(tranY) > 0.01){
+    fill(255, 255, 255, 40);
+    rect(width / 2, height / 2, width * 2, height * 2);
+  }
+  popMatrix();
 }
 
 void keyPressed(){
