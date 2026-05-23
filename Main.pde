@@ -4,6 +4,8 @@ int curTrack = 0;
 int gameState = 0;
 ArrayList<Track> tracks = new ArrayList();
 
+float tranX;
+float tranY;
 Player p;
 ArrayList<Obstacle> obstacles = new  ArrayList();
 ArrayList<Particle> particles = new  ArrayList();

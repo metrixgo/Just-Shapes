@@ -47,6 +47,8 @@ class Player{
   boolean hurt(){
     if(t >= 0 && t <= invincibility) return false;
     particles.add(new Particle(x, y, color(255), 2));
+    w *= 0.8;
+    h *= 0.8;
     lives--;
     t = 0;
     return lives <= 0;

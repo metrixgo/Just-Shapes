@@ -18,8 +18,8 @@ class Particle{
     this.c = c;
     if(mode == 0){
       this.l = random(20, 50);
-      this.w = random(10, 20);
-      this.h = random(10, 20);
+      this.w = random(10, 15);
+      this.h = random(10, 15);
       this.rot = random(TWO_PI);
     }
     else if(mode == 1){

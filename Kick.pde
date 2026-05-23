@@ -14,11 +14,12 @@ class Kick extends Obstacle{
     this.t = 0;
     this.w = w;
     this.c = c;
-    kickDur = 5;
+    this.kickDur = 5;
   }
   
   void update(){
     t++;
+
     if(t <= fadeInDur){
       fill(c);
       if(dir == 0){
