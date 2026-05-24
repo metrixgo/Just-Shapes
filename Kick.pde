@@ -15,6 +15,7 @@ class Kick extends Obstacle{
     this.w = w;
     this.c = c;
     this.kickDur = 3;
+    fadeInDur -= kickDur;
   }
   
   void update(){

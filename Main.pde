@@ -32,8 +32,8 @@ void setup(){
   song = new SoundFile(this, "data/Theme.mp3");
   song.loop();
   tracks.add(new Track(0, "Source", NEARLYBLACK, PINKRED, CYAN, 125, 2400, this));
-  tracks.add(new Track(1, "The Emerald Electric", NEARLYBLACK, DARKGREEN, LIGHTGREEN, 91, 2620, this));
-  tracks.add(new Track(2, "Zero Dark Hundred", NEARLYBLACK, DARKORANGE, LIGHTORANGE, 104, 3280, this));
+  tracks.add(new Track(1, "The Emerald Electric", NEARLYBLACK, DARKGREEN, LIGHTGREEN, 91, 2680, this));
+  tracks.add(new Track(2, "Zero Dark Hundred", NEARLYBLACK, DARKORANGE, LIGHTORANGE, 104, 3340, this));
 }
 
 void draw(){
