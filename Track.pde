@@ -69,32 +69,33 @@ class Track{
             }
 
             if(line >= lines.length) return;
-
             curLine = split(lines[line], ";");
-            if(curLine[0].equals("multi")){
-                int n = int(curLine[1]);
-                for(int i = 1; i <= n; i++){
-                    line++;
-                    if(line >= lines.length) break;
-                    curLine = split(lines[line], ";");
-                    addCurLineObstacles();
-                }
-                line++;
-                curLine = split(lines[line], ";");
-            }
 
-            if(curLine[0].equals("repeat")){
-                if(repeat != 0 && !curLine[1].equals("0")){
-                    if(repeat == -1) repeat = int(curLine[1]) - 1;
-                    else repeat--;
-                    line = prevLine;
+            while((curLine[0].equals("repeat") || curLine[0].equals("multi")) && line < lines.length){
+                if(curLine[0].equals("repeat")){
+                    if(repeat != 0 && !curLine[1].equals("0")){
+                        if(repeat == -1) repeat = int(curLine[1]) - 1;
+                        else repeat--;
+                        line = prevLine;
+                    }
+                    else{
+                        line++;
+                        prevLine = line;
+                        repeat = -1;
+                    }
+                    if(line < lines.length) curLine = split(lines[line], ";");
                 }
-                else{
+                else if(curLine[0].equals("multi")){
+                    int n = int(curLine[1]);
+                    for(int i = 1; i <= n; i++){
+                        line++;
+                        if(line >= lines.length) break;
+                        curLine = split(lines[line], ";");
+                        addCurLineObstacles();
+                    }
                     line++;
-                    prevLine = line;
-                    repeat = -1;
+                    if(line < lines.length) curLine = split(lines[line], ";");
                 }
-                if(line < lines.length) curLine = split(lines[line], ";");
             }
 
             if(millis() >= 60 / bpm * 1000 * float(curLine[0]) + prevT){
