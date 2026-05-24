@@ -1,43 +1,50 @@
-class Rectangle extends Obstacle{
+class Text extends Obstacle{
   float x;
   float y;
+  float s;
   float w;
-  float curW;
   float h;
-  float curH;
+  float curS;
   float t;
+  String text;
   color c;
   
-  Rectangle(float x, float y, float w, float h, color c){
+  Text(float x, float y, float s, String text, color c, float l){
     this.x = x;
     this.y = y;
-    this.w = w;
-    this.curW = w - amplitude;
-    this.h = h;
-    this.curH = h - amplitude;
+    this.s = s;
+    this.curS = s - amplitude;
+    this.text = text;
     this.t = 0;
     this.c = c;
+    textSize(s);
+    this.w = textWidth(text);
+    this.h = textAscent() + textDescent();
+    lethalDur = l;
   }
   
   void update(){
     t++;
     if(t <= fadeInDur){
       fill(red(c), green(c), blue(c), t / fadeInDur * fadeInStr);
-      curW = lerp(w - amplitude, w, t / fadeInDur);
-      curH = lerp(h - amplitude, h, t / fadeInDur);
+      curS = lerp(s - amplitude, s, t / fadeInDur);
     }
     else if(t <= fadeInDur + lethalDur){
       fill(lerpColor(color(255), c, (t - fadeInDur) / lethalDur));
     }
     else if(t <= fadeInDur + lethalDur + fadeOutDur){
       fill(red(c), green(c), blue(c), lerp(alpha(c), 0, (t - fadeInDur - lethalDur) / fadeOutDur));
-      curW = lerp(w, w - amplitude, (t - fadeInDur - lethalDur) / fadeOutDur);
-      curH = lerp(h, h - amplitude, (t - fadeInDur - lethalDur) / fadeOutDur);
+      curS = lerp(s, s - amplitude, (t - fadeInDur - lethalDur) / fadeOutDur);
     }
     else{
       fill(0, 0, 0, 0);
     }
-    rect(x, y, curW, curH);
+    textSize(curS);
+    rect(x, y, w, h);
+    if(t > fadeInDur && t < fadeInDur + lethalDur){
+      fill(c);
+      text(text, x, y);
+    }
   }
   
   boolean isLethal(){
@@ -49,7 +56,6 @@ class Rectangle extends Obstacle{
   }
   
   boolean isColliding(Player p){
-    if(p == null) return false;
     return (x - w / 2 <= p.x + p.w / 2) && (x + w / 2 >= p.x - p.w / 2) && (y - h / 2 <= p.y + p.h / 2) && (y + h / 2 >= p.y - p.h / 2);
   }
 }

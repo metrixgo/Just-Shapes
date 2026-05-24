@@ -51,7 +51,7 @@ class Track{
             rect(width / 2 , height / 2 - 50, 400, 300);
         }
         else if(gameState == 1){
-            if(!song.isPlaying()){
+            if(!song.isPlaying() && line != 0){
                 gameState = 3;
                 song.stop();
                 song = new SoundFile(main, "data/complete.mp3");
@@ -133,7 +133,7 @@ class Track{
             float loc;
             if(dir == 0) loc = random(height);
             else loc = random(random(width));
-            if(curLine.length >= 4) obstacles.add(new Beam(loc, dir, float(curLine[2]), obstacle, float(curLine[3])));
+            if(curLine.length == 4) obstacles.add(new Beam(loc, dir, float(curLine[2]), obstacle, float(curLine[3])));
             else obstacles.add(new Beam(loc, dir, float(curLine[2]), obstacle));
         }
         else if(curLine[1].equals("rectangle")){
@@ -148,6 +148,12 @@ class Track{
             if(dir % 2 == 0) loc = random(height);
             else loc = random(random(width));
             obstacles.add(new Kick(loc, dir, float(curLine[2]), obstacle));
+        }
+        else if(curLine[1].equals("text")){
+            textSize(float(curLine[2]));
+            float w = textWidth(curLine[3]);
+            float h = textAscent() + textDescent();
+            obstacles.add(new Text(random(w / 2, width - w / 2), random(h / 2, height - h / 2), float(curLine[2]), curLine[3], obstacle, float(curLine[4])));
         }
     }
 

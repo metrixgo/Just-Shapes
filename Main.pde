@@ -19,17 +19,21 @@ final color CYAN = color(0, 230, 253);
 final color PINKRED = color(255, 56, 111);
 final color DARKGREEN = color(35, 111, 73);
 final color LIGHTGREEN = color(215, 249, 159);
+final color DARKORANGE = color(180, 72, 0);
+final color LIGHTORANGE = color(243, 163, 51);
 
 void setup(){
   noStroke();
   textAlign(CENTER, CENTER);
+  textFont(createFont("Consolas", 30));
   rectMode(CENTER);
   ellipseMode(CENTER);
   size(800, 600);
   song = new SoundFile(this, "data/Theme.mp3");
   song.loop();
   tracks.add(new Track(0, "Source", NEARLYBLACK, PINKRED, CYAN, 125, 2400, this));
-  tracks.add(new Track(1, "The Emerald Electric", NEARLYBLACK, DARKGREEN, LIGHTGREEN, 91, 2610, this));
+  tracks.add(new Track(1, "The Emerald Electric", NEARLYBLACK, DARKGREEN, LIGHTGREEN, 91, 2620, this));
+  tracks.add(new Track(2, "Zero Dark Hundred", NEARLYBLACK, DARKORANGE, LIGHTORANGE, 104, 3260, this));
 }
 
 void draw(){
