@@ -189,3 +189,4 @@ repeat;7
 repeat;15;
 0.25;ellipse;70;70
 repeat;15;
+2;wait

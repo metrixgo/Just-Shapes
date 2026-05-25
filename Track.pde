@@ -46,12 +46,12 @@ class Track{
             line = 0;
             fill(player);
             textSize(50);
-            text(name, width / 2, height / 2 + 150);
+            text(name, width / 2, height / 2 + 200);
             fill(obstacle);
-            rect(width / 2 , height / 2 - 50, 400, 300);
+            rect(width / 2 , height / 2 - 25, 600, 350);
         }
         else if(gameState == 1){
-            if(!song.isPlaying() && line != 0){
+            if(line >= lines.length && obstacles.size() == 0){
                 gameState = 3;
                 song.stop();
                 song = new SoundFile(main, "data/complete.mp3");

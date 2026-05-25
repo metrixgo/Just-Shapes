@@ -34,6 +34,12 @@ class Particle{
       this.h = p.h + amplitude;
       this.rot = 0;
     }
+    else if(mode == 3){
+      this.l = 100;
+      this.w = 20;
+      this.h = 20;
+      this.rot = 0;
+    }
   }
   
   void update(){
@@ -52,6 +58,9 @@ class Particle{
     }
     else if(mode == 2){
         rect(x, y, lerp(w, w + amplitude * 1.5, t / l), lerp(h, h + amplitude * 1.5, t / l));
+    }
+    else if(mode == 3){
+        rect(x, y, w, h);
     }
   }
 

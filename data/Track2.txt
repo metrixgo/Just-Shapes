@@ -825,3 +825,4 @@ multi;2
 0.5;wait
 repeat;1
 0;beam;400;250
+2;wait

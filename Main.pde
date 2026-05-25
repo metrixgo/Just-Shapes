@@ -3,6 +3,8 @@ import processing.sound.*;
 int curTrack = 0;
 int gameState = 0;
 ArrayList<Track> tracks = new ArrayList();
+ArrayList<SoundFile> songs = new ArrayList();
+SoundFile song;
 
 
 Player p;
@@ -11,8 +13,6 @@ ArrayList<Particle> particles = new  ArrayList();
 
 float tranX = 0;
 float tranY = 0;
-
-SoundFile song;
 
 final color NEARLYBLACK = color(19, 35, 36);
 final color CYAN = color(0, 230, 253);
@@ -34,12 +34,21 @@ void setup(){
   tracks.add(new Track(0, "Source", NEARLYBLACK, PINKRED, CYAN, 125, 2400, this));
   tracks.add(new Track(1, "The Emerald Electric", NEARLYBLACK, DARKGREEN, LIGHTGREEN, 91, 2680, this));
   tracks.add(new Track(2, "Zero Dark Hundred", NEARLYBLACK, DARKORANGE, LIGHTORANGE, 104, 3340, this));
+  songs.add(new SoundFile(this, "data/Source.mp3"));
+  songs.add(new SoundFile(this, "data/The Emerald Electric.mp3"));
+  songs.add(new SoundFile(this, "data/Zero Dark Hundred.mp3"));
 }
 
 void draw(){
   pushMatrix();
   translate(tranX, tranY);
   tracks.get(curTrack).update();
+  if(gameState == 0){
+    fill(255, 255, 255);
+    triangle(width / 2 - 50, 40, width / 2 + 50, 40, width / 2, 20);
+    triangle(width / 2 - 50, height - 40, width / 2 + 50, height - 40, width / 2, height - 20);
+    if((int)random(40) == 0) particles.add(new Particle(random(height), random(width), color(255), 3));
+  }
   for(int i = particles.size() - 1; i >= 0; i--){
     if(particles.isEmpty()) break;
     if(particles.get(i).isDone()) particles.remove(i);
@@ -72,16 +81,17 @@ void keyPressed(){
     }
   }
   else if(gameState == 0){
-    if(keyCode == DOWN && curTrack < tracks.size() - 1){
-      curTrack = min(curTrack + 1, tracks.size() - 1);
+    if(keyCode == DOWN || key == 's'){
+      curTrack = (curTrack + 1) % tracks.size();
     }
-    else if(keyCode == UP){
-      curTrack = max(curTrack - 1, 0);
+    else if(keyCode == UP || key == 'w'){
+      if(curTrack == 0) curTrack = tracks.size() - 1;
+      else curTrack--;
     }
     else if(keyCode == ENTER){
       p = new Player(tracks.get(curTrack).player);
       song.stop();
-      song = new SoundFile(this, "data/" + tracks.get(curTrack).name + ".mp3");
+      song = songs.get(curTrack);
       song.play();
       tracks.get(curTrack).play();
       gameState = 1;
