@@ -44,6 +44,8 @@ void draw(){
   translate(tranX, tranY);
   tracks.get(curTrack).update();
   if(gameState == 0){
+    tranX = 0;
+    tranY = 0;
     fill(255, 255, 255);
     triangle(width / 2 - 50, 40, width / 2 + 50, 40, width / 2, 20);
     triangle(width / 2 - 50, height - 40, width / 2 + 50, height - 40, width / 2, height - 20);
@@ -60,6 +62,10 @@ void draw(){
     rect(width / 2, height / 2, width * 2, height * 2);
   }
   popMatrix();
+  if(gameState == 1){
+    fill(255, 255, 255);
+    rect(width / 2 - (1 - song.position() / song.duration()) * width, 0, width, 10);
+  }
 }
 
 void keyPressed(){
@@ -94,6 +100,7 @@ void keyPressed(){
       song = songs.get(curTrack);
       song.play();
       tracks.get(curTrack).play();
+      particles.add(new Particle(tracks.get(curTrack).name));
       gameState = 1;
     }
   }

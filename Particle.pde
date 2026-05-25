@@ -8,6 +8,7 @@ class Particle{
   float rot;
   float amplitude = 50;
   int mode;
+  String s;
   color c;
   
   Particle(float x, float y, color c, int mode){
@@ -26,20 +27,27 @@ class Particle{
       this.l = 10;
       this.w = p.w + amplitude;
       this.h = p.h + amplitude;
-      this.rot = 0;
     }
     else if(mode == 2){
       this.l = 30;
       this.w = p.w + amplitude;
       this.h = p.h + amplitude;
-      this.rot = 0;
     }
     else if(mode == 3){
       this.l = 100;
       this.w = 20;
       this.h = 20;
-      this.rot = 0;
     }
+  }
+
+  Particle(String s){
+    textSize(60);
+    this.mode = 4;
+    this.l = 200;
+    this.x = width - textWidth(s) / 2 - 20;
+    this.y = height - 60;
+    this.s = s;
+    this.c = color(255, 255, 255);
   }
   
   void update(){
@@ -61,6 +69,10 @@ class Particle{
     }
     else if(mode == 3){
         rect(x, y, w, h);
+    }
+    else if(mode == 4){
+        textSize(60);
+        text(s, x, y);
     }
   }
 
