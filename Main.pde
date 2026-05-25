@@ -1,6 +1,7 @@
 import processing.sound.*;
 
 int curTrack = 0;
+float curProgress = 0;
 int gameState = 0;
 ArrayList<Track> tracks = new ArrayList();
 ArrayList<SoundFile> songs = new ArrayList();
@@ -24,6 +25,7 @@ final color LIGHTORANGE = color(243, 163, 51);
 
 void setup(){
   noStroke();
+  strokeWeight(5);
   textAlign(CENTER, CENTER);
   textFont(createFont("Consolas", 30));
   rectMode(CENTER);
@@ -46,6 +48,7 @@ void draw(){
   if(gameState == 0){
     tranX = 0;
     tranY = 0;
+    curProgress = 0;
     fill(255, 255, 255);
     triangle(width / 2 - 50, 40, width / 2 + 50, 40, width / 2, 20);
     triangle(width / 2 - 50, height - 40, width / 2 + 50, height - 40, width / 2, height - 20);
@@ -63,8 +66,9 @@ void draw(){
   }
   popMatrix();
   if(gameState == 1){
+    curProgress = song.position() / song.duration();
     fill(255, 255, 255);
-    rect(width / 2 - (1 - song.position() / song.duration()) * width, 0, width, 10);
+    rect(width / 2 - (1 - curProgress) * width, 0, width, 10);
   }
 }
 

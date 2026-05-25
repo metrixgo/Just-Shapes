@@ -51,7 +51,7 @@ class Track{
             rect(width / 2 , height / 2 - 25, 600, 350);
         }
         else if(gameState == 1){
-            if(line >= lines.length && obstacles.size() == 0){
+            if(!song.isPlaying() && line > 5){
                 gameState = 3;
                 song.stop();
                 song = new SoundFile(main, "data/complete.mp3");

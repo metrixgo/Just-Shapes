@@ -4,6 +4,7 @@ abstract class Obstacle{
   float fadeOutDur = 10;
   float fadeInStr = 100;
   float amplitude = 10;
+  float strokeWeight = 5;
   abstract void update();
   abstract boolean isDone();
   abstract boolean isLethal();

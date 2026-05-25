@@ -31,8 +31,8 @@ class Player{
     if(down) y += temp;
     if(left) x -= temp;
     if(right) x += temp;
-    //x = constrain(x, w / 2, width - w / 2);
-    //y = constrain(y, h / 2, height - h / 2);
+    x = constrain(x, w / 2, width - w / 2);
+    y = constrain(y, h / 2, height - h / 2);
     if(t >= 0 && t <= invincibility){
       fill(lerpColor(color(255), c, t * 1.0 / invincibility));
       t++;

@@ -21,23 +21,37 @@ class Ellipse extends Obstacle{
   
   void update(){
     t++;
+    color temp;
     if(t <= fadeInDur){
-      fill(red(c), green(c), blue(c), t / fadeInDur * fadeInStr);
+      temp = color(red(c), green(c), blue(c), t / fadeInDur * fadeInStr);
       curW = lerp(w - amplitude, w, t / fadeInDur);
       curH = lerp(h - amplitude, h, t / fadeInDur);
     }
     else if(t <= fadeInDur + lethalDur){
-      fill(lerpColor(color(255), c, (t - fadeInDur) / lethalDur));
+      temp = lerpColor(color(255), c, (t - fadeInDur) / lethalDur);
     }
     else if(t <= fadeInDur + lethalDur + fadeOutDur){
-      fill(red(c), green(c), blue(c), lerp(alpha(c), 0, (t - fadeInDur - lethalDur) / fadeOutDur));
+      temp = color(red(c), green(c), blue(c), lerp(alpha(c), 0, (t - fadeInDur - lethalDur) / fadeOutDur));
       curW = lerp(w, w - amplitude, (t - fadeInDur - lethalDur) / fadeOutDur);
       curH = lerp(h, h - amplitude, (t - fadeInDur - lethalDur) / fadeOutDur);
     }
     else{
-      fill(0, 0, 0, 0);
+      temp = color(0, 0, 0, 0);
     }
-    ellipse(x, y, curW, curH);
+
+    if(t <= fadeInDur){
+      fill(temp);
+      ellipse(x, y, curW - strokeWeight, curH - strokeWeight);
+      noFill();
+      stroke(temp);
+      ellipse(x, y, 3 * w - 2 * curW, 3 * h - 2 * curH);
+      noStroke();
+    }
+    else{
+      fill(temp);
+      ellipse(x, y, curW, curH);
+    }
+    
   }
   
   boolean isLethal(){
