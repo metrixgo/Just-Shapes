@@ -1,0 +1,19 @@
+0.5;text;100;Falling;35
+1;text;100;Falling;35
+0.75;text;60;there's an open door;78.75
+2.25;text;100;Calling;35
+1;text;100;Calling;35
+0.75;text;60;cause I'm wanting more;78.75
+2.25;text;50;I'm wondering when I'll know for sure;131.25
+3.75;text;60;What you're waiting for...;130
+3.75;wait
+repeat;1
+multi;2
+0;kick;200
+0;kick;200
+repeat;0
+0.5;wait
+multi;2
+0;kick;200
+0;kick;200
+repeat;6767

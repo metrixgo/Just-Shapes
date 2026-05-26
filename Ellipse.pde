@@ -40,8 +40,6 @@ class Ellipse extends Obstacle{
     }
 
     if(t <= fadeInDur){
-      fill(temp);
-      ellipse(x, y, curW - strokeWeight, curH - strokeWeight);
       noFill();
       stroke(temp);
       ellipse(x, y, 3 * w - 2 * curW, 3 * h - 2 * curH);
