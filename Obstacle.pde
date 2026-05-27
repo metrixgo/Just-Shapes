@@ -1,11 +1,20 @@
-abstract class Obstacle{
-  float fadeInDur = 80;
-  float lethalDur = 15;
-  float fadeOutDur = 5;
-  float fadeInStr = 100;
-  float amplitude = 10;
-  abstract void update();
-  abstract boolean isDone();
-  abstract boolean isLethal();
-  abstract boolean isColliding(Player p);
+static class Obstacle{
+  static float originalFadeInDur = 80;
+  static float fadeInDur = 80;
+  static float lethalDur = 15;
+  static float fadeOutDur = 5;
+  static float fadeInStr = 100;
+  static float amplitude = 10;
+  void update(){
+    return;
+  }
+  boolean isDone(){
+    return false;
+  }
+  boolean isLethal(){
+    return false;
+  }
+  boolean isColliding(Player p){
+    return false;
+  }
 }

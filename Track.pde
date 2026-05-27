@@ -27,8 +27,8 @@ class Track{
         this.obstacle = obstacle;
         this.player = player;
         this.main = main;
-        this.bpm = bpm;
-        this.offset = offset;
+        this.bpm = bpm * speed;
+        this.offset = offset / speed;
         this.started = false;
         this.prevT = offset;
         p = new Player(player);
@@ -71,31 +71,18 @@ class Track{
             if(line >= lines.length) return;
             curLine = split(lines[line], ";");
 
-            while((curLine[0].equals("repeat") || curLine[0].equals("multi") || curLine[0].equals("")) && line < lines.length){
-                if(curLine[0].equals("repeat")){
-                    if(repeat != 0 && !curLine[1].equals("0")){
-                        if(repeat == -1) repeat = int(curLine[1]) - 1;
-                        else repeat--;
-                        line = prevLine;
-                    }
-                    else{
-                        line++;
-                        prevLine = line;
-                        repeat = -1;
-                    }
-                    if(line < lines.length) curLine = split(lines[line], ";");
+            while((curLine[0].equals("repeat")) && line < lines.length){
+                if(repeat != 0 && !curLine[1].equals("0")){
+                    if(repeat == -1) repeat = int(curLine[1]) - 1;
+                    else repeat--;
+                    line = prevLine;
                 }
-                else if(curLine[0].equals("multi")){
-                    int n = int(curLine[1]);
-                    for(int i = 1; i <= n; i++){
-                        line++;
-                        if(line >= lines.length) break;
-                        curLine = split(lines[line], ";");
-                        addCurLineObstacles();
-                    }
+                else{
                     line++;
-                    if(line < lines.length) curLine = split(lines[line], ";");
+                    prevLine = line;
+                    repeat = -1;
                 }
+                if(line < lines.length) curLine = split(lines[line], ";");
             }
 
             if(millis() >= 60 / bpm * 1000 * float(curLine[0]) + prevT){
@@ -155,6 +142,15 @@ class Track{
             float w = textWidth(curLine[3]);
             float h = textAscent() + textDescent();
             obstacles.add(new Text(random(w / 2, width - w / 2), random(h / 2, height - h / 2), float(curLine[2]), curLine[3], obstacle, float(curLine[4])));
+        }
+        else if(curLine[0].equals("multi")){
+            int n = int(curLine[1]);
+            for(int i = 1; i <= n; i++){
+                line++;
+                if(line >= lines.length) break;
+                curLine = split(lines[line], ";");
+                addCurLineObstacles();
+            }
         }
     }
 

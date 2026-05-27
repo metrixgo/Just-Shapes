@@ -6,6 +6,7 @@ class Text extends Obstacle{
   float h;
   float curS;
   float t;
+  float lethalDur;
   String text;
   color c;
   
@@ -20,7 +21,7 @@ class Text extends Obstacle{
     textSize(s);
     this.w = textWidth(text);
     this.h = textAscent() + textDescent();
-    lethalDur = l;
+    this.lethalDur = l;
   }
   
   void update(){

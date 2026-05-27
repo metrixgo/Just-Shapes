@@ -5,6 +5,7 @@ class Beam extends Obstacle{
   float w;
   float curW;
   float t;
+  float selfLethalDur;
   color c;
   
   Beam(float loc, int dir, float w, color c){
@@ -15,6 +16,7 @@ class Beam extends Obstacle{
     this.w = w;
     this.curW = w - amplitude;
     this.c = c;
+    this.selfLethalDur = lethalDur;
   }
 
   Beam(float loc, int dir, float w, color c, float l){
@@ -25,7 +27,7 @@ class Beam extends Obstacle{
     this.w = w;
     this.curW = w - amplitude;
     this.c = c;
-    lethalDur = l;
+    this.selfLethalDur = l;
   }
   
   void update(){
@@ -35,13 +37,13 @@ class Beam extends Obstacle{
       curW = lerp(w - amplitude, w, t / fadeInDur);
       curLoc = loc;
     }
-    else if(t <= fadeInDur + lethalDur){
-      fill(lerpColor(color(255), c, (t - fadeInDur) / lethalDur));
+    else if(t <= fadeInDur + selfLethalDur){
+      fill(lerpColor(color(255), c, (t - fadeInDur) / selfLethalDur));
       curLoc = loc + sin((t - fadeInDur) * amplitude / 3) * amplitude / 5;
     }
-    else if(t <= fadeInDur + lethalDur + fadeOutDur){
-      fill(red(c), green(c), blue(c), lerp(alpha(c), 0, (t - fadeInDur - lethalDur) / fadeOutDur));
-      curW = lerp(w, w - amplitude, (t - fadeInDur - lethalDur) / fadeOutDur);
+    else if(t <= fadeInDur + selfLethalDur + fadeOutDur){
+      fill(red(c), green(c), blue(c), lerp(alpha(c), 0, (t - fadeInDur - selfLethalDur) / fadeOutDur));
+      curW = lerp(w, w - amplitude, (t - fadeInDur - selfLethalDur) / fadeOutDur);
       curLoc = loc;
     }
     else{
@@ -57,11 +59,11 @@ class Beam extends Obstacle{
   }
   
   boolean isLethal(){
-    return t < fadeInDur + lethalDur && t > fadeInDur;
+    return t < fadeInDur + selfLethalDur && t > fadeInDur;
   }
   
   boolean isDone(){
-    return t >= fadeInDur + lethalDur + fadeOutDur;
+    return t >= fadeInDur + selfLethalDur + fadeOutDur;
   }
   
   boolean isColliding(Player p){

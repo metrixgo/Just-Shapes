@@ -1,12 +1,12 @@
 import processing.sound.*;
 
+float speed = 1;
 int curTrack = 0;
 float curProgress = 0;
 int gameState = 0;
 ArrayList<Track> tracks = new ArrayList();
 ArrayList<SoundFile> songs = new ArrayList();
 SoundFile song;
-
 
 Player p;
 ArrayList<Obstacle> obstacles = new  ArrayList();
@@ -106,7 +106,9 @@ void keyPressed(){
       p = new Player(tracks.get(curTrack).player);
       song.stop();
       song = songs.get(curTrack);
+      song.rate(speed);
       song.play();
+      Obstacle.fadeInDur /= speed;
       tracks.get(curTrack).play();
       particles.add(new Particle(tracks.get(curTrack).name));
       gameState = 1;
