@@ -1,6 +1,6 @@
 import processing.sound.*;
 
-float speed = 1;
+float speed = 0.5;
 int curTrack = 0;
 float curProgress = 0;
 int gameState = 0;
