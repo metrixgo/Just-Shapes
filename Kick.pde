@@ -85,30 +85,30 @@ class Kick extends Obstacle{
 
     if(t >= fadeInDur + kickDur && t < fadeInDur + kickDur * 2){
       if(dir == 0){
-        tranX += amplitude * 3 / kickDur;
+        tranX += amplitude / kickDur;
       }
       else if(dir == 1){
-        tranY += amplitude * 3 / kickDur;
+        tranY += amplitude / kickDur;
       }
       else if(dir == 2){
-        tranX -= amplitude * 3 / kickDur;
+        tranX -= amplitude / kickDur;
       }
       else{
-        tranY -= amplitude * 3 / kickDur;
+        tranY -= amplitude / kickDur;
       }
     }
     else if(t >= fadeInDur + kickDur * 2 && t < fadeInDur + kickDur * 3){
       if(dir == 0){
-        tranX -= amplitude * 3 / kickDur;
+        tranX -= amplitude / kickDur;
       }
       else if(dir == 1){
-        tranY -= amplitude * 3 / kickDur;
+        tranY -= amplitude / kickDur;
       }
       else if(dir == 2){
-        tranX += amplitude * 3 / kickDur;
+        tranX += amplitude / kickDur;
       }
       else{
-        tranY += amplitude * 3 / kickDur;
+        tranY += amplitude / kickDur;
       }
     }
   }

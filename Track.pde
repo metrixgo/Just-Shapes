@@ -71,7 +71,7 @@ class Track{
             if(line >= lines.length) return;
             curLine = split(lines[line], ";");
 
-            while((curLine[0].equals("repeat") || curLine[0].equals("multi")) && line < lines.length){
+            while((curLine[0].equals("repeat") || curLine[0].equals("multi") || curLine[0].equals("")) && line < lines.length){
                 if(curLine[0].equals("repeat")){
                     if(repeat != 0 && !curLine[1].equals("0")){
                         if(repeat == -1) repeat = int(curLine[1]) - 1;
