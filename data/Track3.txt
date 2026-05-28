@@ -244,9 +244,9 @@ repeat;4
 0.541666667;wait
 repeat;0
 0.333333333;multi;3
-0;kick;80
-0;kick;80
-0;kick;80
+0;kick;50
+0;kick;50
+0;kick;50
 repeat;11
 0.166666667;kick;80
 0.166666667;kick;80
@@ -272,9 +272,9 @@ repeat;11
 0.125;kick;80
 repeat;0
 0.333333333;multi;3
-0;kick;80
-0;kick;80
-0;kick;80
+0;kick;50
+0;kick;50
+0;kick;50
 repeat;9
 repeat;0
 0.166666667;kick;80

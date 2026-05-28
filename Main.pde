@@ -15,6 +15,9 @@ ArrayList<Particle> particles = new  ArrayList();
 float tranX = 0;
 float tranY = 0;
 
+Editor e;
+boolean opened = false;
+
 final color NEARLYBLACK = color(19, 35, 36);
 final color CYAN = color(0, 230, 253);
 final color PINKRED = color(255, 56, 111);
@@ -77,6 +80,11 @@ void draw(){
 }
 
 void keyPressed(){
+  if(keyCode == CONTROL && !opened){
+    opened = true;
+    e = new Editor();
+    PApplet.runSketch(new String[]{"Editor"}, e);
+  }
   if(gameState == 1){
     if(keyCode == UP || key == 'w'){
       p.up = true;
