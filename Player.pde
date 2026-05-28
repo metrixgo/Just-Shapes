@@ -5,7 +5,7 @@ class Player{
   float h = 30;
   float speed = 10;
   int lives = 3;
-  int invincibility = 80000;
+  int invincibility = 80;
   int t = -1;
   boolean up = false;
   boolean down = false;

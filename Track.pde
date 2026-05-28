@@ -27,8 +27,8 @@ class Track{
         this.obstacle = obstacle;
         this.player = player;
         this.main = main;
-        this.bpm = bpm * speed;
-        this.offset = offset / speed;
+        this.bpm = bpm;
+        this.offset = offset;
         this.started = false;
         this.prevT = offset;
         p = new Player(player);
@@ -85,8 +85,8 @@ class Track{
                 if(line < lines.length) curLine = split(lines[line], ";");
             }
 
-            if(millis() >= 60 / bpm * 1000 * float(curLine[0]) + prevT){
-                prevT += 60 / bpm * 1000 * float(curLine[0]);
+            if(millis() >= 60 / bpm / speed * 1000 * float(curLine[0]) + prevT){
+                prevT += 60 / bpm / speed * 1000 * float(curLine[0]);
                 addCurLineObstacles();
                 line++;
             }
@@ -155,7 +155,7 @@ class Track{
     }
 
     void play(){
-        prevT = millis() + offset;
+        prevT = millis() + offset / speed;
         started = true;
     }
 

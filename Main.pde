@@ -1,6 +1,6 @@
 import processing.sound.*;
 
-float speed = 0.7;
+float speed = 1;
 int curTrack = 0;
 float curProgress = 0;
 int gameState = 0;
@@ -82,7 +82,7 @@ void draw(){
 void keyPressed(){
   if(keyCode == CONTROL && !opened){
     opened = true;
-    e = new Editor();
+    e = new Editor(this);
     PApplet.runSketch(new String[]{"Editor"}, e);
   }
   if(gameState == 1){
