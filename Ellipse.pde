@@ -23,16 +23,16 @@ class Ellipse extends Obstacle{
     t++;
     color temp;
     if(t <= fadeInDur){
-      curW = lerp(w - amplitude, w, t / fadeInDur);
-      curH = lerp(h - amplitude, h, t / fadeInDur);
+      curW = lerp(w + amplitude * 2, w, t / fadeInDur);
+      curH = lerp(h + amplitude * 2, h, t / fadeInDur);
       noFill();
       stroke(red(c), green(c), blue(c), t / fadeInDur * fadeInStr);
-      ellipse(x, y, 3 * w - 2 * curW, 3 * h - 2 * curH);
+      ellipse(x, y, curW - 5, curH - 5);
       noStroke();
     }
     else if(t <= fadeInDur + lethalDur){;
       fill(lerpColor(color(255), c, (t - fadeInDur) / lethalDur));
-      ellipse(x, y, curW, curH);
+      ellipse(x, y, w, h);
     }
     else if(t <= fadeInDur + lethalDur + fadeOutDur){
       curW = lerp(w, w - amplitude, (t - fadeInDur - lethalDur) / fadeOutDur);

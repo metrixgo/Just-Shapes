@@ -41,7 +41,7 @@ void setup(){
   song.loop();
   tracks.add(new Track(0, "Source", NEARLYBLACK, PINKRED, CYAN, 125, 2400, this));
   tracks.add(new Track(1, "The Emerald Electric", NEARLYBLACK, DARKGREEN, LIGHTGREEN, 91, 2680, this));
-  tracks.add(new Track(2, "Zero Dark Hundred", NEARLYBLACK, DARKORANGE, LIGHTORANGE, 104, 3340, this));
+  tracks.add(new Track(2, "Zero Dark Hundred", NEARLYBLACK, DARKORANGE, LIGHTORANGE, 104, 3350, this));
   tracks.add(new Track(3, "Speculation", NEARLYBLACK, DARKBLUE, LIGHTBLUE, 95, 2950, this));
   for(Track t : tracks){
     songs.add(new SoundFile(this, "data/" + t.name + ".mp3"));
