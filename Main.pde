@@ -1,6 +1,6 @@
 import processing.sound.*;
 
-float speed = 1;
+float speed = 0.7;
 int curTrack = 0;
 float curProgress = 0;
 int gameState = 0;
@@ -116,7 +116,7 @@ void keyPressed(){
       song = songs.get(curTrack);
       song.rate(speed);
       song.play();
-      Obstacle.fadeInDur /= speed;
+      Obstacle.fadeInDur = Obstacle.originalFadeInDur / speed;
       tracks.get(curTrack).play();
       particles.add(new Particle(tracks.get(curTrack).name));
       gameState = 1;

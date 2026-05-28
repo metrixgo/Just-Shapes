@@ -37,6 +37,7 @@ class Rectangle extends Obstacle{
     else{
       fill(0, 0, 0, 0);
     }
+    
     rect(x, y, curW, curH);
   }
   

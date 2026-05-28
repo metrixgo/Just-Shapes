@@ -40,6 +40,7 @@ class Text extends Obstacle{
     else{
       fill(0, 0, 0, 0);
     }
+    
     textSize(curS);
     rect(x, y, w, h);
     if(t > fadeInDur && t < fadeInDur + lethalDur){
