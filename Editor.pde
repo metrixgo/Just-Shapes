@@ -1,13 +1,26 @@
+import java.io.FileWriter;
+
 class Editor extends PApplet{
 
     PApplet main;
 
     int pointer = 0;
     int subPointer = 0;
+    int subSubPointer = -1;
     boolean selected = false;
 
     String newTrack = "";
     String fileName = "";
+    String[] saveAs = new String[]{
+        "Song Name: ",
+        "Background Color: #",
+        "Obstacle Color: #",
+        "Player Color: #",
+        "Beats Per Minute: ",
+        "Offset: "
+    };
+    int[] headers = {11, 19, 17, 15, 18, 8};
+
     PrintWriter output;
     
     Editor(PApplet main){
@@ -42,17 +55,20 @@ class Editor extends PApplet{
                 textSize(20);
                 text("Edit", textWidth("Edit") / 2 + 40, 180);
                 text("Save As", textWidth("Save As") / 2 + 40, 280);
+                textAlign(CORNER, CORNER);
                 if(subPointer == 0){
-                    textAlign(CORNER, CORNER);
                     text(newTrack, textWidth("Save As") + 100, 100);
-                    textAlign(CENTER, CENTER);
                 }
                 else if(subPointer == 1){
-                    textAlign(CORNER, CORNER);
-                    text(fileName, textWidth("Save As") + 100, 100);
-                    textAlign(CENTER, CENTER);
+                    int temp = 100;
+                    for(String s : saveAs){
+                        text(s, textWidth("Save As") + 100, temp);
+                        temp += 50;  
+                    }
                 }
-                triangle(10, 170 + subPointer * 100, 30, 180 + subPointer * 100, 10, 190 + subPointer * 100);
+                textAlign(CENTER, CENTER);
+                if(subSubPointer == -1) triangle(10, 170 + subPointer * 100, 30, 180 + subPointer * 100, 10, 190 + subPointer * 100);
+                else triangle(textWidth("Save As") + 70, 80 + subSubPointer * 50, textWidth("Save As") + 90, 90 + subSubPointer * 50, textWidth("Save As") + 70, 100 + subSubPointer * 50);
             }
             else if(pointer == 1){
                 textSize(40);
@@ -97,17 +113,20 @@ class Editor extends PApplet{
         else{
             if(keyCode == CONTROL){
                 selected = false;
+                subSubPointer = -1;
             }
             if(pointer == 0){
-                if(keyCode == DOWN){
-                    subPointer = (subPointer + 1) % 2;
-                }
-                else if(keyCode == UP){
-                    if(subPointer == 0) subPointer = 1;
-                    else subPointer--;
+                if(subSubPointer == -1){
+                    if(keyCode == DOWN){
+                        subPointer = (subPointer + 1) % 2;
+                    }
+                    else if(keyCode == UP){
+                        if(subPointer == 0) subPointer = 1;
+                        else subPointer--;
+                    }
                 }
                 if(subPointer == 0){
-                    if((key >= 'a' && key <= 'z') || (key >= '0' && key <= '9') || key == ';' || key == ' ' || key == '.'){
+                    if((Character.toLowerCase(key) >= 'a' && Character.toLowerCase(key) <= 'z') || (key >= '0' && key <= '9') || key == ';' || key == ' ' || key == '.'){
                         newTrack += key;
                     }
                     else if(keyCode == ENTER){
@@ -118,23 +137,52 @@ class Editor extends PApplet{
                     }
                 }
                 else if(subPointer == 1){
-                    if((key >= 'a' && key <= 'z') || (key >= '0' && key <= '9') || (key >= 'A' && key <= 'Z') || key == ' ' || key == ';'){
-                        fileName += key;
+                    if(subSubPointer == -1){
+                        if(keyCode == RIGHT) subSubPointer = 0;
+                        else if(keyCode == ENTER){
+                            String line = tracks.size() + "";
+                            for(int i = 0; i <= 5; i++){
+                                line += ";" + saveAs[i].substring(headers[i]);
+                            }
+                            output = new PrintWriter(new FileWriter("D:\\My Assets\\Processing Projects\\Just Shapes\\data\\Track" + tracks.size() + ".txt"));
+                            output.print(newTrack);
+                            output.close();
+                            output = new PrintWriter(new FileWriter("D:\\My Assets\\Processing Projects\\Just Shapes\\data\\TrackReference.txt", true));
+                            output.println(line);
+                            String[] temp = line.split(";");
+                            tracks.add(new Track(int(temp[0]), temp[1], color(unhex("FF" + temp[2])), color(unhex("FF" + temp[3])), color(unhex("FF" + temp[4])), float(temp[5]), float(temp[6]), this));
+                            songs.add(new SoundFile(this, "data/" + temp[1] + ".mp3"));
+                            output.close();
+                            newTrack = "";
+                            saveAs = new String[]{
+                                "Song Name: ",
+                                "Background Color: #",
+                                "Obstacle Color: #",
+                                "Player Color: #",
+                                "Beats Per Minute: ",
+                                "Offset: "
+                            };
+                            selected = false;
+                            subSubPointer = -1;
+                        }
                     }
-                    else if(keyCode == BACKSPACE && fileName.length() > 0){
-                        fileName = fileName.substring(0, fileName.length() - 1);
-                    }
-                    else if(keyCode == ENTER && fileName.length() > 0 && newTrack.length() > 0){
-                        String[] temp = fileName.split(";");
-                        output = createWriter("D:\\My Assets\\Processing Projects\\Just Shapes\\data\\Track" + tracks.size() + ".txt");
-                        output.print(newTrack);
-                        output.flush();
-                        output.close();
-                        tracks.add(new Track(tracks.size(), temp[0], NEARLYBLACK, PINKRED, CYAN, float(temp[1]), float(temp[2]), main));
-                        songs.add(new SoundFile(this, "data/" + temp[0] + ".mp3"));
-                        newTrack = "";
-                        fileName = "";
-                        selected = false;
+                    else{
+                        if(keyCode == LEFT){
+                            subSubPointer = -1;
+                        }
+                        else if(keyCode == DOWN){
+                            subSubPointer = (subSubPointer + 1) % 6;
+                        }
+                        else if(keyCode == UP){
+                            if(subSubPointer == 0) subSubPointer = 5;
+                            else subSubPointer--;
+                        }
+                        else if((Character.toLowerCase(key) >= 'a' && Character.toLowerCase(key) <= 'z') || (key >= '0' && key <= '9') || key == ' '){
+                            saveAs[subSubPointer] += key;
+                        }
+                        else if(keyCode == BACKSPACE && saveAs[subSubPointer].length() > headers[subSubPointer]){
+                            saveAs[subSubPointer] = saveAs[subSubPointer].substring(0, saveAs[subSubPointer].length() - 1);
+                        }
                     }
                 }
             }

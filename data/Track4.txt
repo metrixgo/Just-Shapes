@@ -1,4 +1,4 @@
-1;multi;2
-0;beam;50
-0;beam;50
-repeat;100
+0;ellipse;200;200
+1;kick;200
+1;wait
+repeat;6060
