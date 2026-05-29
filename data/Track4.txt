@@ -1,6 +1,4 @@
+1;multi;2
 0;beam;50
-0.5;ellipse;100;100
-repeat;0
-0.5;beam;50
-0.5;ellipse;100;100
+0;beam;50
 repeat;100

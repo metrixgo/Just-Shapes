@@ -39,12 +39,13 @@ void setup(){
   size(800, 600, P2D);
   song = new SoundFile(this, "data/Theme.mp3");
   song.loop();
-  tracks.add(new Track(0, "Source", NEARLYBLACK, PINKRED, CYAN, 125, 2400, this));
-  tracks.add(new Track(1, "The Emerald Electric", NEARLYBLACK, DARKGREEN, LIGHTGREEN, 91, 2680, this));
-  tracks.add(new Track(2, "Zero Dark Hundred", NEARLYBLACK, DARKORANGE, LIGHTORANGE, 104, 3350, this));
-  tracks.add(new Track(3, "Speculation", NEARLYBLACK, DARKBLUE, LIGHTBLUE, 95, 2950, this));
-  for(Track t : tracks){
-    songs.add(new SoundFile(this, "data/" + t.name + ".mp3"));
+
+  String[] lines = loadStrings("data/TrackReference.txt");
+
+  for(String line : lines){
+    String[] temp = line.split(";");
+    tracks.add(new Track(int(temp[0]), temp[1], color(unhex("FF" + temp[2])), color(unhex("FF" + temp[3])), color(unhex("FF" + temp[4])), float(temp[5]), float(temp[6]), this));
+    songs.add(new SoundFile(this, "data/" + temp[1] + ".mp3"));
   }
 }
 
