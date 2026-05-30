@@ -78,7 +78,7 @@ class Editor extends PApplet{
                 rectMode(CORNER);
                 rect(textWidth("Speed") + 60, 170, 550 * (speed - 0.5) / 1.5, 20);
                 rectMode(CENTER);
-                text(speed, 550 * (speed - 0.5) / 1.5 + textWidth("Speed") + 50, 210);
+                text(nf(speed, 0, 2), 550 * (speed - 0.5) / 1.5 + textWidth("Speed") + 50, 210);
                 triangle(10, 170 + subPointer * 100, 30, 180 + subPointer * 100, 10, 190 + subPointer * 100);
             }
         }
@@ -144,15 +144,20 @@ class Editor extends PApplet{
                             for(int i = 0; i <= 5; i++){
                                 line += ";" + saveAs[i].substring(headers[i]);
                             }
-                            output = new PrintWriter(new FileWriter("D:\\My Assets\\Processing Projects\\Just Shapes\\data\\Track" + tracks.size() + ".txt"));
-                            output.print(newTrack);
-                            output.close();
-                            output = new PrintWriter(new FileWriter("D:\\My Assets\\Processing Projects\\Just Shapes\\data\\TrackReference.txt", true));
-                            output.println(line);
+                            try{
+                                output = new PrintWriter(new FileWriter("D:\\My Assets\\Processing Projects\\Just Shapes\\data\\Track" + tracks.size() + ".txt"));
+                                output.print(newTrack);
+                                output.close();
+                                output = new PrintWriter(new FileWriter("D:\\My Assets\\Processing Projects\\Just Shapes\\data\\TrackReference.txt", true));
+                                output.print("\n" + line);
+                                output.close();
+                            }
+                            catch(IOException e){
+                                e.printStackTrace();
+                            }
                             String[] temp = line.split(";");
                             tracks.add(new Track(int(temp[0]), temp[1], color(unhex("FF" + temp[2])), color(unhex("FF" + temp[3])), color(unhex("FF" + temp[4])), float(temp[5]), float(temp[6]), this));
                             songs.add(new SoundFile(this, "data/" + temp[1] + ".mp3"));
-                            output.close();
                             newTrack = "";
                             saveAs = new String[]{
                                 "Song Name: ",

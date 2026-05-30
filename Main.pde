@@ -119,7 +119,8 @@ void keyPressed(){
       song.play();
       Obstacle.fadeInDur = Obstacle.originalFadeInDur / speed;
       tracks.get(curTrack).play();
-      particles.add(new Particle(tracks.get(curTrack).name));
+      if(abs(speed - 1) <= 0.0001) particles.add(new Particle(tracks.get(curTrack).name));
+      else particles.add(new Particle(tracks.get(curTrack).name + " (" + nf(speed, 0, 2) + "x)"));
       gameState = 1;
     }
   }

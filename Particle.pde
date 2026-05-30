@@ -41,11 +41,11 @@ class Particle{
   }
 
   Particle(String s){
-    textSize(60);
+    textSize(50);
     this.mode = 4;
     this.l = 200;
     this.x = width - textWidth(s) / 2 - 20;
-    this.y = height - 60;
+    this.y = height - 50;
     this.s = s;
     this.c = color(255, 255, 255);
   }
@@ -71,7 +71,7 @@ class Particle{
         rect(x, y, w, h);
     }
     else if(mode == 4){
-        textSize(60);
+        textSize(50);
         text(s, x, y);
     }
   }
