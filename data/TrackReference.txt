@@ -2,3 +2,4 @@
 1;The Emerald Electric;131313;238F49;D7F99F;91;2680
 2;Zero Dark Hundred;131313;B44800;F3A333;104;3350
 3;Speculation;131313;222FB5;A0FFFC;95;2950
+4;The Emerald Electric;000022;ffff00;ffffff;91;2680

@@ -27,7 +27,7 @@ class Ellipse extends Obstacle{
       curH = lerp(h + amplitude * 2, h, t / fadeInDur);
       noFill();
       stroke(red(c), green(c), blue(c), t / fadeInDur * fadeInStr);
-      ellipse(x, y, curW - 5, curH - 5);
+      ellipse(x, y, curW - 10, curH - 10);
       noStroke();
     }
     else if(t <= fadeInDur + lethalDur){;

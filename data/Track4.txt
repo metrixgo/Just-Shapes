@@ -1,4 +1,4 @@
 0;ellipse;200;200
 1;kick;200
 1;wait
-repeat;6060
+repeat;1000

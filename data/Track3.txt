@@ -248,8 +248,8 @@ repeat;4
 repeat;0
 0.333333333;multi;3
 0;kick;50
-0;rectangle;200;200
-0;rectangle;200;200
+0;rectangle;100;100
+0;rectangle;100;100
 repeat;11
 0.166666667;kick;80
 0.166666667;kick;80
@@ -276,8 +276,8 @@ repeat;11
 repeat;0
 0.333333333;multi;3
 0;kick;50
-0;rectangle;200;200
-0;rectangle;200;200
+0;rectangle;100;100
+0;rectangle;100;100
 repeat;9
 repeat;0
 0.166666667;kick;80
